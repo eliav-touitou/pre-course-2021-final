@@ -1,8 +1,12 @@
 // creating variables
 const addButton = document.querySelector("#add-button");
 const viewSection = document.querySelector("#view-section");
+let counter = 0;
+
 //event listeners
 addButton.addEventListener("click", addTodo);
+addButton.addEventListener("click", taskCounter);
+
 //functions
 function addTodo(e) {
   e.preventDefault();
@@ -26,4 +30,8 @@ function addTodo(e) {
   todoText.className = "todo-text";
   todoContainer.append(todoText);
   document.querySelector("#text-input").value = "";
+}
+
+function taskCounter() {
+  document.getElementById("counter").innerHTML = ++counter + "tasks on list";
 }
