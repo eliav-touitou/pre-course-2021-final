@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   addButton.addEventListener("click", addTodo);
   sortButton.addEventListener("click", sortTasks);
   viewSection.addEventListener("click", doneTask);
+  viewSection.addEventListener("click", completeTask);
 
   //functions -
 
@@ -97,30 +98,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  //function for assigning new class to the todo-container for animating it due to the clicked button(trash/complete)
-  function doneTask(e) {
-    const item = e.target;
-    //when the trash button is clicked the code below will be executed to animate the container and then delete it
-    if (item.classList[0] === "trash-button") {
-      const taskContainer = item.parentElement;
-      if (!confirm(`Are you sure you want to delete task?`)) {
-        return;
-      }
-      taskContainer.classList.add("fall");
-      taskContainer.addEventListener("transitionend", (e) => {
-        removeLocalTodos(taskContainer);
-      });
-    }
-    //when the complete button is clicked the code below will be executed to animate the container
+  //2 functions for assigning a new class to the todo-container for animating it due to the clicked button(trash/complete) -
 
+  //when the complete button is clicked the code below will be executed to animate the container
+  function completeTask(e) {
     if (item.classList[0] === "complete-button") {
       const taskContainer = item.parentElement;
       taskContainer.classList.toggle("completed");
     }
   }
+  //when the trash button is clicked the code below will be executed to animate the container and then delete it
+  function doneTask(e) {
+    const item = e.target;
+    if (item.classList[0] === "trash-button") {
+      const taskContainer = item.parentElement;
+      //alerting the user to make sure he wants to delete the task
+      if (!confirm(`Are you sure you want to delete task?`)) {
+        return;
+      }
+      taskContainer.classList.add("fall");
+      taskContainer.addEventListener("transitionend", (e) => {
+        removeFromStorage(taskContainer);
+      });
+    }
+  }
 
   // function for removing the deleted task  out of the storage
-  function removeLocalTodos(taskContainer) {
+  function removeFromStorage(taskContainer) {
     const containerNodeList = document.querySelectorAll(".todo-container");
     const containerArray = Array.from(containerNodeList);
     const taskIndex = containerArray.indexOf(taskContainer);
