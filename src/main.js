@@ -25,6 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // completedButton.addEventListener("click", doneTask);
 
   //functions
+  function getLocalStorage() {
+    let getLocalStorageData = localStorage.getItem("my-todo");
+    if (!getLocalStorageData) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(getLocalStorageData);
+    }
+  }
   function addTodo() {
     let task = {
       text: document.querySelector("#text-input").value,
@@ -42,6 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
     //  generating the container of the new task
     const todoContainer = document.createElement("div");
     todoContainer.className = "todo-container";
+    //  generating the text div of the new task
+    const todoText = document.createElement("div");
+    todoText.innerText = task.text;
+    todoText.className = "todo-text";
+    todoContainer.append(todoText);
     //  generating the priority div of the new task
     const todoPriority = document.createElement("div");
     todoPriority.className = "todo-priority";
@@ -55,11 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace("T", " ");
     createdAt.className = "todo-created-at";
     todoContainer.append(createdAt);
-    //  generating the text div of the new task
-    const todoText = document.createElement("div");
-    todoText.innerText = task.text;
-    todoText.className = "todo-text";
-    todoContainer.append(todoText);
+
     //create complete button
     const completedButton = document.createElement("button");
     completedButton.innerHTML = `<i class="fas fa-check"></i>`;
@@ -75,22 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // function for counting tasks
   function showTasks() {
-    let getLocalStorageData = localStorage.getItem("my-todo");
-    if (!getLocalStorageData) {
-      tasks = [];
-    } else {
-      tasks = JSON.parse(getLocalStorageData);
-    }
+    getLocalStorage();
     counter.textContent = tasks.length;
   }
   // function for sorting tasks by their priorty
   function sortTasks() {
-    let getLocalStorageData = localStorage.getItem("my-todo");
-    if (!getLocalStorageData) {
-      tasks = [];
-    } else {
-      tasks = JSON.parse(getLocalStorageData);
-    }
+    getLocalStorage();
     tasks = tasks.sort((a, b) => b.priority - a.priority);
     viewSection.innerHTML = " ";
     for (const task of tasks) {
@@ -107,9 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       todo.classList.add("fall");
       //at the end
       removeLocalTodos(todo);
-      todo.addEventListener("transitionend", (e) => {
-        todo.remove();
-      });
+      todo.remove();
     }
     if (item.classList[0] === "complete-btn") {
       const todo = item.parentElement;
@@ -117,14 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   function removeLocalTodos(todo) {
-    let tasks;
-
-    let getLocalStorageData = localStorage.getItem("my-todo");
-    if (!getLocalStorageData) {
-      tasks = [];
-    } else {
-      tasks = JSON.parse(getLocalStorageData);
-    }
+    getLocalStorage();
     const todoIndex = todo.children[0].innerText;
     tasks.splice(tasks.indexOf(todoIndex), 1);
     localStorage.setItem("my-todo", JSON.stringify(tasks));
