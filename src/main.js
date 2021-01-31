@@ -103,6 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (item.classList[0] === "trash-btn") {
       const todo = item.parentElement;
+      if (!confirm(`Are you sure you want to delete task?`)) {
+        preventDefault();
+      }
       todo.classList.add("fall");
       //at the end
       removeLocalTodos(todo);
