@@ -102,6 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   //when the complete button is clicked the code below will be executed to animate the container
   function completeTask(e) {
+    const item = e.target;
     if (item.classList[0] === "complete-button") {
       const taskContainer = item.parentElement;
       taskContainer.classList.toggle("completed");
@@ -122,7 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
   }
-
   // function for removing the deleted task  out of the storage
   function removeFromStorage(taskContainer) {
     const containerNodeList = document.querySelectorAll(".todo-container");
