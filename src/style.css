@@ -41,7 +41,7 @@ header {
 }
 input {
   height: 2vh;
-  width: 85%;
+  width: 70%;
   margin: 1% auto;
   top: 25px;
   right: 0;
@@ -56,18 +56,15 @@ select {
   height: 2vh;
   width: 30%;
   margin: 1% auto;
-  top: 25px;
   right: 0;
   left: 0;
-  outline: none;
   border: none;
   padding: 20px;
-  padding-right: 50px;
 }
 #add-button,
 #sort-button {
-  background: #6d6d6d;
-  color: white;
+  background: white;
+  color: #6d6d6d;
   border: none;
   padding: 1% 1%;
   cursor: pointer;
@@ -75,11 +72,14 @@ select {
   margin: 1% auto;
   font-family: "Oswald", sans-serif;
 }
-.button {
-  position: relative;
-  cursor: pointer;
-  transition: all 0.3s ease;
+
+#add-button:hover,
+#sort-button:hover,
+button:hover {
+  background: #6d6d6d;
+  color: white;
 }
+
 .tasks-header {
   color: white;
   display: flex;
@@ -128,10 +128,10 @@ select {
 .todo-priority {
   flex: 1;
 }
-.trash-btn,
-.complete-btn {
-  background: #6d6d6d;
-  color: white;
+.trash-button,
+.complete-button {
+  background: white;
+  color: #6d6d6d;
   border: none;
   padding: 1% 1%;
   cursor: pointer;
