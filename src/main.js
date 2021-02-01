@@ -173,4 +173,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       draggable.classList.remove("dragging");
     });
   });
+
+  viewSection.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(viewSection, e.clientY);
+    const draggable = document.querySelector(".dragging");
+    if (afterElement == null) {
+      viewSection.appendChild(draggable);
+    } else {
+      viewSection.insertBefore(draggable, afterElement);
+    }
+  });
 });
