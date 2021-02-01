@@ -36,4 +36,5 @@ During the creation of this project i used information from the web sites below:
 - [stack overflow](https://stackoverflow.com/) - for privet cases
 - [javascript.info](https://javascript.info/mouse-drag-and-drop/) - for the drag&drop option
 - [drag n' drop functionality](https://htmldom.dev/drag-and-drop-element-in-a-list) - for the drag&drop option
+
   ENJOY! 🤘
