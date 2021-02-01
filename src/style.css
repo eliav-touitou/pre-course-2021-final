@@ -41,7 +41,7 @@ header {
 }
 input {
   height: 2vh;
-  width: 70%;
+  width: 60%;
   margin: 1% auto;
   top: 25px;
   right: 0;
@@ -50,6 +50,7 @@ input {
   border: none;
   padding: 20px;
   padding-right: 50px;
+  font-family: "Oswald", sans-serif;
 }
 
 select {
@@ -60,9 +61,12 @@ select {
   left: 0;
   border: none;
   padding: 20px;
+  font-family: "Oswald", sans-serif;
+  text-align: center;
 }
 #add-button,
-#sort-button {
+#sort-button,
+#clear-button {
   background: white;
   color: #6d6d6d;
   border: none;
@@ -75,6 +79,7 @@ select {
 
 #add-button:hover,
 #sort-button:hover,
+#clear-button:hover,
 button:hover {
   background: #6d6d6d;
   color: white;
@@ -113,7 +118,6 @@ button:hover {
   padding: 1%;
   background: #fff;
   cursor: default;
-  z-index: 4;
   border-radius: 2px;
   word-wrap: break-word;
   justify-content: space-between;

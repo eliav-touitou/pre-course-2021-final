@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const addButton = document.querySelector("#add-button");
   const viewSection = document.querySelector("#view-section");
   const sortButton = document.querySelector("#sort-button");
+  const clearButton = document.querySelector("#clear-button");
   const counter = document.querySelector("#counter");
   // getting the array out of the storage and creating container for each object of the array
   let tasks = await getPersistent();
@@ -14,14 +15,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   for (const task of tasks) {
     viewSection.append(createContainer(task));
   }
-  //calling the showTask function for updating the tasks counter on loading
-  showTasks();
+  //calling the tasksCounter function for updating the tasks counter on loading
+  tasksCounter();
 
   //event listeners -
   addButton.addEventListener("click", addTodo);
   sortButton.addEventListener("click", sortTasks);
   viewSection.addEventListener("click", doneTask);
   viewSection.addEventListener("click", completeTask);
+  clearButton.addEventListener("click", clearAll);
 
   //functions -
 
@@ -32,12 +34,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       priority: document.querySelector("#priority-selector").value,
       date: new Date().getTime(),
     };
-    console.log(task);
     //inserting the data to a container for displaying it properly on the pge
     viewSection.append(createContainer(task));
     tasks.push(task);
     setPersistent(tasks);
-    showTasks();
+    tasksCounter();
     //emptying the input for the next task todo
     document.querySelector("#text-input").value = "";
   }
@@ -83,9 +84,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // function for counting tasks and displaying the amount in the counter
-  function showTasks() {
+  function tasksCounter() {
     counter.textContent = tasks.length;
-    console.log(tasks.length);
   }
 
   // function for sorting tasks by their priority
@@ -97,6 +97,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       viewSection.append(container);
     }
   }
+  //function for clearing the entire list(if the user approves)
+  function clearAll() {
+    if (confirm("Are you sure you want to clear the entire list?")) {
+      viewSection.innerHTML = " ";
+      tasks = [];
+      counter.textContent = tasks.length;
+      setPersistent(tasks);
+    }
+  }
 
   //2 functions for assigning a new class to the todo-container for animating it due to the clicked button(trash/complete) -
 
@@ -105,7 +114,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const item = e.target;
     if (item.classList[0] === "complete-button") {
       const taskContainer = item.parentElement;
-      taskContainer.classList.toggle("completed");
+      if (taskContainer.classList[1] !== "completed") {
+        taskContainer.classList.add("completed");
+      } else {
+        taskContainer.classList.remove("completed");
+      }
+      // taskContainer.classList.toggle("completed");
+      setPersistent(tasks);
     }
   }
   //when the trash button is clicked the code below will be executed to animate the container and then delete it
