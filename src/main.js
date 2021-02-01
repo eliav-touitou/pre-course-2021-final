@@ -20,11 +20,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   //event listeners -
   addButton.addEventListener("click", addTodo);
-  sortButton.addEventListener("click", sortTasks);
+
   viewSection.addEventListener("click", doneTask);
   viewSection.addEventListener("click", completeTask);
   clearButton.addEventListener("click", clearAll);
-
+  sortButton.addEventListener("click", sortTasks);
   //functions -
 
   //function for creating new task as an arrays object
@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     let task = {
       text: document.querySelector("#text-input").value,
       priority: document.querySelector("#priority-selector").value,
-      date: new Date().getTime(),
+      date: new Date().toISOString().slice(0, 19).replace("T", " "),
+      done: false,
     };
     //inserting the data to a container for displaying it properly on the pge
     viewSection.append(createContainer(task));
@@ -63,10 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     //  generating the time div of the new task and displaying it in SQL format
     const createdAt = document.createElement("div");
-    createdAt.innerText = new Date(task.date)
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
+    createdAt.innerText = task.date;
+
     createdAt.className = "todo-created-at";
     todoContainer.append(createdAt);
     //create complete button and assigning classes for decoration
@@ -79,7 +78,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     trashButton.innerHTML = `<i class="fas fa-trash"></i>`;
     trashButton.classList.add("trash-button");
     todoContainer.appendChild(trashButton);
+    if (task.done === "true") {
+      todoContainer.classList.add("completed");
+    } else {
+      todoContainer.classList.remove("completed");
+    }
 
+    todoContainer.setAttribute("draggable", "true");
     return todoContainer;
   }
 
@@ -89,7 +94,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // function for sorting tasks by their priority
-  function sortTasks() {
+  function sortTasks(e) {
+    const item = e.target;
     tasks = tasks.sort((a, b) => b.priority - a.priority);
     viewSection.innerHTML = " ";
     for (const task of tasks) {
@@ -113,15 +119,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   function completeTask(e) {
     const item = e.target;
     if (item.classList[0] === "complete-button") {
-      const taskContainer = item.parentElement;
-      if (taskContainer.classList[1] !== "completed") {
-        taskContainer.classList.add("completed");
-      } else {
-        taskContainer.classList.remove("completed");
+      const taskContainer = item.parentNode;
+      const date = taskContainer.querySelector(".todo-created-at").innerText;
+      for (let task of tasks) {
+        if (task.date === date) {
+          if (task.done === "true") {
+            task.done = "false";
+          } else {
+            task.done = "true";
+          }
+        }
       }
-      // taskContainer.classList.toggle("completed");
-      setPersistent(tasks);
+
+      taskContainer.classList.toggle("completed");
     }
+    setPersistent(tasks);
   }
   //when the trash button is clicked the code below will be executed to animate the container and then delete it
   function doneTask(e) {
