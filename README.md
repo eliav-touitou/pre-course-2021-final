@@ -1,10 +1,12 @@
 # Pre Course Project - Todo List 📋
 
-This project is a "todo list" web application based on html, css and javascript.
+This project is a "todo list" web application
+based on html, css and javascript.
 the project represents my solution for the Pre course final!
 The project passed all tests successfully
 Heres a link to the [GitHub Page](https://eliav-touitou.github.io/pre-course-2021-final-boilerplate/src/)
-the web app is storing the data using JSON.bin, there for, please forgive it for being and refresh the page if needed🗝️
+the web app is storing the data using JSON.bin,
+therefor, please forgive it for being slow and refresh the page if needed🗝️
 
 ## Features:
 
@@ -22,8 +24,7 @@ Sort tasks based on priority value.🔎
 - clear all list button 🧹
 - Mark/Unmark todo as done📂
 - alerting user on drastic actions
-- css animation on deleting and marking tasks, and icons
--
+- css animation on deleting, marking tasks, and icons
 
 ## Resources
 
