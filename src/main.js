@@ -78,13 +78,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     trashButton.innerHTML = `<i class="fas fa-trash"></i>`;
     trashButton.classList.add("trash-button");
     todoContainer.appendChild(trashButton);
+    todoContainer.setAttribute("draggable", "true");
+
     if (task.done === "true") {
       todoContainer.classList.add("completed");
     } else {
       todoContainer.classList.remove("completed");
     }
 
-    todoContainer.setAttribute("draggable", "true");
     return todoContainer;
   }
 
@@ -160,4 +161,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     setPersistent(tasks);
     counter.textContent = tasks.length;
   }
+  //drag and drop section
+  const draggables = document.querySelectorAll(".todo-container");
+
+  draggables.forEach((draggable) => {
+    draggable.addEventListener("dragstart", () => {
+      draggable.classList.add("dragging");
+    });
+
+    draggable.addEventListener("dragend", () => {
+      draggable.classList.remove("dragging");
+    });
+  });
 });
