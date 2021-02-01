@@ -40,8 +40,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     tasks.push(task);
     setPersistent(tasks);
     tasksCounter();
-    //emptying the input for the next task todo
+    //emptying the input and priority selector for the next task todo
     document.querySelector("#text-input").value = "";
+    document.querySelector("#priority-selector").value = "";
   }
 
   //function for generating the html container for the "task" object
@@ -79,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     trashButton.classList.add("trash-button");
     todoContainer.appendChild(trashButton);
     todoContainer.setAttribute("draggable", "true");
-
+    //adding classes based on "done" value to mark done tasks
     if (task.done === "true") {
       todoContainer.classList.add("completed");
     } else {
@@ -163,7 +164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   //drag and drop section
   const draggables = document.querySelectorAll(".todo-container");
-
+  //adding classes while the container is grabbed, and deleting it when its dropped
   draggables.forEach((draggable) => {
     draggable.addEventListener("dragstart", () => {
       draggable.classList.add("dragging");
@@ -173,7 +174,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       draggable.classList.remove("dragging");
     });
   });
-
+  //function for placing the dropped container inside the view-section
   viewSection.addEventListener("dragover", (e) => {
     e.preventDefault();
     const afterElement = getDragAfterElement(viewSection, e.clientY);
@@ -184,11 +185,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       viewSection.insertBefore(draggable, afterElement);
     }
   });
+  // function for positioning the container due to other containers already inside the view-section
   function getDragAfterElement(viewSection, y) {
+    // making an array of all the containers except the dragged one, to manipulate them
     const draggableElements = [
       ...viewSection.querySelectorAll(".todo-container:not(.dragging)"),
     ];
-
+    // finding which container is behind and closest to the cursor
     return draggableElements.reduce(
       (closest, child) => {
         const box = child.getBoundingClientRect();
