@@ -120,7 +120,7 @@ button:hover {
   margin: 5% 10%;
   padding: 1%;
   background: #fff;
-  cursor: default;
+  cursor: grab;
   border-radius: 2px;
   word-wrap: break-word;
   justify-content: space-between;
