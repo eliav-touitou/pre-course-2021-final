@@ -174,20 +174,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     const item = e.target;
     if (item.classList[0] === "edit-button") {
       const taskContainer = item.parentElement;
+      //creating the input and button for editing the task, and hiding the "edit-button"
       const editInput = document.createElement("input");
       const saveButton = document.createElement("button");
       saveButton.classList.add("save-button");
       saveButton.innerHTML = `<i class="fas fa-save"></i>`;
-
       item.hidden = true;
       taskContainer.append(editInput);
       taskContainer.append(saveButton);
-
+      //Function for setting the "todo-container" back to default, and saving the edited changes
       saveButton.addEventListener("click", () => {
         const text = taskContainer.querySelector(".todo-text");
 
-        if (editTask.value === "") {
-          alert("You must write something!");
+        if (editInput.value === "") {
+          alert("Please, insert text!");
         } else {
           text.innerText = editInput.value;
 
