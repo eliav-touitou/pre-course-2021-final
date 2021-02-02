@@ -23,6 +23,7 @@ Sort tasks based on priority value.🔎
 - Delete unwanted todos 🗑️
 - clear all list button 🧹
 - Mark/Unmark todo as done📂
+- Edit task function ✏️
 - alerting user on drastic actions
 - css animation on deleting, marking tasks, and icons
 
