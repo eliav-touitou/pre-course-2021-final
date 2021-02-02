@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   viewSection.addEventListener("click", doneTask);
   viewSection.addEventListener("click", completeTask);
+  viewSection.addEventListener("click", editTask);
   clearButton.addEventListener("click", clearAll);
   sortButton.addEventListener("click", sortTasks);
   //functions -
@@ -69,6 +70,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     createdAt.className = "todo-created-at";
     todoContainer.append(createdAt);
+    //Create edit button and assigning classes for decoration
+    const editButton = document.createElement("button");
+    editButton.innerHTML = `<i class="fas fa-pen"></i>`;
+    editButton.classList.add("edit-button");
+    todoContainer.appendChild(editButton);
     //create complete button and assigning classes for decoration
     const completedButton = document.createElement("button");
     completedButton.innerHTML = `<i class="fas fa-check"></i>`;
@@ -79,6 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     trashButton.innerHTML = `<i class="fas fa-trash"></i>`;
     trashButton.classList.add("trash-button");
     todoContainer.appendChild(trashButton);
+
     todoContainer.setAttribute("draggable", "true");
     //adding classes based on "done" value to mark done tasks
     if (task.done === "true") {
@@ -161,6 +168,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     taskContainer.remove();
     setPersistent(tasks);
     counter.textContent = tasks.length;
+  }
+  //function for editing tasks
+  function editTask(e) {
+    const item = e.target;
+    if (item.classList[0] === "edit-button") {
+      const taskContainer = item.parentElement;
+      const editInput = document.createElement("input");
+      const saveButton = document.createElement("button");
+      saveButton.classList.add("save-button");
+      saveButton.innerHTML = `<i class="fas fa-save"></i>`;
+
+      item.hidden = true;
+      taskContainer.append(editInput);
+      taskContainer.append(saveButton);
+
+      saveButton.addEventListener("click", () => {
+        const text = taskContainer.querySelector(".todo-text");
+
+        if (editTask.value === "") {
+          alert("You must write something!");
+        } else {
+          text.innerText = editInput.value;
+
+          editInput.hidden = true;
+          saveButton.hidden = true;
+          item.hidden = false;
+          const containers = document.querySelectorAll(".todo-container");
+          const indexOfTarget = Array.from(containers).indexOf(taskContainer);
+          tasks[indexOfTarget].text = editInput.value;
+          setPersistent(tasks);
+
+          editInput.value = "";
+        }
+      });
+    }
   }
   //drag and drop section
   const draggables = document.querySelectorAll(".todo-container");

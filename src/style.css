@@ -71,7 +71,8 @@ select {
 
 #add-button,
 #sort-button,
-#clear-button {
+#clear-button,
+button {
   background: white;
   color: #6d6d6d;
   border: none;
@@ -138,7 +139,9 @@ button:hover {
   flex: 1;
 }
 .trash-button,
-.complete-button {
+.complete-button,
+.edit-button,
+.save-button {
   background: white;
   color: #6d6d6d;
   border: none;
