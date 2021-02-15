@@ -8,15 +8,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   const clearButton = document.querySelector("#clear-button");
   const counter = document.querySelector("#counter");
   // getting the array out of the storage and creating container for each object of the array
-  let tasks = await getPersistent();
-  if (!tasks) {
-    tasks = [];
-  }
-  for (const task of tasks) {
-    viewSection.append(createContainer(task));
-  }
-  //calling the tasksCounter function for updating the tasks counter on loading
-  tasksCounter();
+  let tasks;
+  getPersistent(DB_NAME).then((data) => {
+    tasks = data;
+    if (!tasks) {
+      tasks = [];
+    }
+    for (const task of tasks) {
+      viewSection.append(createContainer(task));
+    }
+    //calling the tasksCounter function for updating the tasks counter on loading
+    tasksCounter();
+  });
 
   //event listeners -
   addButton.addEventListener("click", addTodo);

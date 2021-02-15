@@ -9,13 +9,13 @@ function getPersistent() {
   };
 
   const request = new Request(url + "/latest", init);
-  spinner.hidden = false;
+  // spinner.hidden = false;
   return fetch(request)
     .then((response) => {
       return response.json();
     })
     .then((body) => {
-      spinner.hidden = true;
+      // spinner.hidden = true;
 
       return body.record["my-todo"];
     });
