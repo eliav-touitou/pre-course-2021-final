@@ -9,13 +9,15 @@ function getPersistent() {
   };
 
   const request = new Request(url + "/latest", init);
-  // spinner.hidden = false;
+  const loader = document.querySelector(".loader");
+  loader.style.visibility = "visible";
+  loader.hidden = false;
   return fetch(request)
     .then((response) => {
       return response.json();
     })
     .then((body) => {
-      // spinner.hidden = true;
+      loader.style.visibility = "hidden";
 
       return body.record["my-todo"];
     });
