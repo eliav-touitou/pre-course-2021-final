@@ -4,7 +4,7 @@ This project is a "todo list" web application
 based on html, css and javascript.
 the project represents my solution for the Pre course final!
 The project passed all tests successfully
-Heres a link to the [GitHub Page](https://eliav-touitou.github.io/pre-course-2021-final-boilerplate/src/)
+Heres a link to the [GitHub Page](https://eliav-touitou.github.io/pre-course-2021-final/src/)
 the web app is storing the data using JSON.bin,
 therefor, please forgive it for being slow and refresh the page if needed🗝️
 
