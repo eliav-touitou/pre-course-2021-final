@@ -1,5 +1,5 @@
 const express = require("express");
-const binId = require("uuid");
+const uuid = require("uuid");
 const app = express();
 const fs = require("fs");
 app.use(express.json());
@@ -26,7 +26,10 @@ app.put("/v3/b/:id", (req, res) => {
     });
     return;
   }
-  fs.writeFileSync(`./bins/${id}.json`, JSON.stringify(body, null, 4));
+  fs.writeFileSync(
+    `${__dirname}bins/${id}.json`,
+    JSON.stringify(body, null, 4)
+  );
   const successMessage = {
     success: true,
     data: body,
@@ -41,17 +44,41 @@ app.post("/v3/b", (req, res) => {
   const { body } = req;
   const id = uuid.v4();
   body.id = id;
-  fs.writeFileSync(
-    `./backEnd/bins/${id}.json`,
-    JSON.stringify(body, null, 4),
-    (err) => {
-      if (err) {
-        res.send("error");
-      } else {
-        res.send(body);
-      }
+  try {
+    fs.writeFileSync(
+      `${__dirname}/bins/${id}.json`,
+      JSON.stringify(body, null, 4)
+    );
+    res.send("awesome");
+  } catch (err) {
+    res.send("error");
+  }
+});
+app.delete("/v3/b/:id", (req, res) => {
+  const id = req.params.id;
+  fs.unlink(`${__dirname}/bins/${id}.json`, (err) => {
+    if (err) {
+      res.status(404).send("BIN not found");
+    } else {
+      res.send("success");
     }
-  );
+  });
+});
+app.get("/v3/b/", (req, res) => {
+  let files = [];
+  const objects = fs.readdirSync(`${__dirname}/bins`);
+  if (objects.length === 0) {
+    res.send("you have no objects");
+  } else {
+    try {
+      for (let object of objects) {
+        files.push(JSON.parse(fs.readFileSync(`${__dirname}/bins/${object}`)));
+      }
+      res.status(200).send(files);
+    } catch (error) {
+      res.status(500).send("there is a problem with the server " + error);
+    }
+  }
 });
 
 app.listen(3000);
