@@ -1,9 +1,11 @@
+//creating variables
 const express = require("express");
 const uuid = require("uuid");
 const app = express();
 const fs = require("fs");
 app.use(express.json());
 
+//pulling a specific bin content
 app.get("/v3/b/:id", (req, res) => {
   const id = req.params.id;
   try {
@@ -14,6 +16,7 @@ app.get("/v3/b/:id", (req, res) => {
   }
 });
 
+//updating a specific bin content
 app.put("/v3/b/:id", (req, res) => {
   const body = req.body;
   const id = req.params.id;
@@ -40,6 +43,7 @@ app.put("/v3/b/:id", (req, res) => {
   res.send(successMessage);
 });
 
+//adding a new nin to the list
 app.post("/v3/b", (req, res) => {
   const { body } = req;
   const id = uuid.v4();
@@ -54,6 +58,7 @@ app.post("/v3/b", (req, res) => {
     res.send("error");
   }
 });
+//deleting a specific bin out of bins
 app.delete("/v3/b/:id", (req, res) => {
   const id = req.params.id;
   fs.unlink(`${__dirname}/bins/${id}.json`, (err) => {
@@ -64,6 +69,8 @@ app.delete("/v3/b/:id", (req, res) => {
     }
   });
 });
+
+//getting the entire bins saved
 app.get("/v3/b/", (req, res) => {
   let files = [];
   const objects = fs.readdirSync(`${__dirname}/bins`);
@@ -82,4 +89,3 @@ app.get("/v3/b/", (req, res) => {
 });
 
 app.listen(3000);
-console.log(`listening to 3000`);
