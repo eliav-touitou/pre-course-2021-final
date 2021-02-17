@@ -37,9 +37,22 @@ app.put("/v3/b/:id", (req, res) => {
   res.send(successMessage);
 });
 
-app.post("/b", (req, res) => {});
-
-app.delete("/b:id", (req, res) => {});
+app.post("/v3/b", (req, res) => {
+  const { body } = req;
+  const id = uuid.v4();
+  body.id = id;
+  fs.writeFileSync(
+    `./backEnd/bins/${id}.json`,
+    JSON.stringify(body, null, 4),
+    (err) => {
+      if (err) {
+        res.send("error");
+      } else {
+        res.send(body);
+      }
+    }
+  );
+});
 
 app.listen(3000);
 console.log(`listening to 3000`);
