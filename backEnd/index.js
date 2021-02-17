@@ -1,4 +1,5 @@
 const express = require("express");
+const binId = require("uuid");
 const app = express();
 const fs = require("fs");
 app.use(express.json());
