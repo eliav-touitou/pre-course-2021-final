@@ -9,7 +9,7 @@ app.use(express.json());
 app.get("/v3/b/:id", (req, res) => {
   const id = req.params.id;
   try {
-    const binContent = fs.readFileSync(`./bins/${id}.json`);
+    const binContent = fs.readFileSync(`./backEnd/bins/${id}.json`);
     res.send(binContent);
   } catch (e) {
     res.status(422).json({ message: "Invalid Record ID" });
@@ -20,7 +20,7 @@ app.get("/v3/b/:id", (req, res) => {
 app.put("/v3/b/:id", (req, res) => {
   const body = req.body;
   const id = req.params.id;
-  const binExist = fs.existsSync("./bins/${id}.json");
+  const binExist = fs.existsSync(`./backEnd/bins/${id}.json`);
 
   if (!binExist) {
     res.status(404).json({
@@ -30,7 +30,7 @@ app.put("/v3/b/:id", (req, res) => {
     return;
   }
   fs.writeFileSync(
-    `${__dirname}bins/${id}.json`,
+    `${__dirname}/bins/${id}.json`,
     JSON.stringify(body, null, 4)
   );
   const successMessage = {
@@ -89,3 +89,4 @@ app.get("/v3/b/", (req, res) => {
 });
 
 app.listen(3000);
+console.log("port 3000");
