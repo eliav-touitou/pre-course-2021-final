@@ -1,0 +1,22 @@
+{
+    "my-todo": [
+        {
+            "text": "hello",
+            "priority": "",
+            "date": "2021-02-20 21:16:20",
+            "done": "true"
+        },
+        {
+            "text": "",
+            "priority": "",
+            "date": "2021-02-20 21:16:20",
+            "done": "true"
+        },
+        {
+            "text": "",
+            "priority": "",
+            "date": "2021-02-20 21:16:21",
+            "done": "false"
+        }
+    ]
+}
